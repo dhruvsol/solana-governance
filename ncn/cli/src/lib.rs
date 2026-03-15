@@ -8,7 +8,7 @@ pub use merkle::*;
 
 use anyhow::Error;
 use borsh_stake::BorshDeserialize;
-use gov_v1::{MetaMerkleLeaf, StakeMerkleLeaf};
+use ncn_snapshot::{MetaMerkleLeaf, StakeMerkleLeaf};
 use itertools::Itertools;
 use meta_merkle_tree::{
     generated_merkle_tree::Delegation, merkle_tree::MerkleTree, utils::get_proof,

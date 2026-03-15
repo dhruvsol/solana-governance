@@ -1,6 +1,6 @@
 use borsh::{BorshDeserialize, BorshSerialize};
 use flate2::{write::GzEncoder, Compression};
-use gov_v1::{MetaMerkleLeaf, StakeMerkleLeaf};
+use ncn_snapshot::{MetaMerkleLeaf, StakeMerkleLeaf};
 use crate::utils::{decompress_gzip_with_limit, max_snapshot_bytes, read_all_with_limit};
 use meta_merkle_tree::{merkle_tree::MerkleTree, utils::get_proof};
 use solana_sdk::hash::{hash, Hash};

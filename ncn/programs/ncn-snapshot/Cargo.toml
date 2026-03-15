@@ -1,12 +1,12 @@
 [package]
-name = "gov-v1"
+name = "ncn-snapshot"
 version = "1.0.0"
 description = "Governance NCN Voting Program"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "gov_v1"
+name = "ncn_snapshot"
 
 [features]
 default = []

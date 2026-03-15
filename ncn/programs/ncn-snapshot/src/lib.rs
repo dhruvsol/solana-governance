@@ -14,7 +14,7 @@ pub use state::*;
 declare_id!("8qua2VAnWaNFDAhUakryMuRdNRVuUehkjnhLECvueGSV");
 
 #[program]
-pub mod gov_v1 {
+pub mod ncn_snapshot {
     use super::*;
 
     pub fn init_program_config(ctx: Context<InitProgramConfig>) -> Result<()> {

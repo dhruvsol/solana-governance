@@ -10,7 +10,7 @@ use anchor_client::{
 use anyhow::{anyhow, Result};
 use clap::Parser;
 use cli::{generate_meta_merkle_snapshot, utils::*, MetaMerkleSnapshot};
-use gov_v1::{Ballot, BallotBox, ConsensusResult, MetaMerkleProof, ProgramConfig};
+use ncn_snapshot::{Ballot, BallotBox, ConsensusResult, MetaMerkleProof, ProgramConfig};
 use log::info;
 use anchor_client::solana_sdk::signature::Signer;
 use std::path::PathBuf;
@@ -218,7 +218,7 @@ fn main() -> Result<()> {
             payer,
             CommitmentConfig::confirmed(),
         );
-        client.program(gov_v1::id()).unwrap()
+        client.program(ncn_snapshot::id()).unwrap()
     }
 
     fn cast_vote_shared(cli: Cli, snapshot_slot: u64, root: [u8; 32], hash: [u8; 32]) -> Result<()> {

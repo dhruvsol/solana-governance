@@ -10,7 +10,7 @@ use anchor_client::{
     },
     ClientError, Program,
 };
-use gov_v1::{accounts, instruction, Ballot, MetaMerkleLeaf, ProgramConfig, StakeMerkleLeaf};
+use ncn_snapshot::{accounts, instruction, Ballot, MetaMerkleLeaf, ProgramConfig, StakeMerkleLeaf};
 
 pub struct TxSender<'a> {
     pub program: &'a Program<&'a Keypair>,

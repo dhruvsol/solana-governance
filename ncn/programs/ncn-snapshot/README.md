@@ -44,8 +44,8 @@ This program enables whitelisted operators to vote on stake distribution snapsho
 Snapshots are structured as a two-tier Merkle tree:
 
 - [`MetaMerkleSnapshot`](../../cli/src/merkle.rs#L11): encapsulates the top-level Merkle root, snapshot slot, and all associated leaf bundles.
-- [`MetaMerkleLeaf`](../../programs/gov-v1/src/state/proof.rs#L40): represents a `VoteAccount` node in the top-level Merkle tree, containing the subroot of its delegated stake tree and total stake.
-- [`StakeMerkleLeaf`](../../programs/gov-v1/src/state/proof.rs#L64): represents a `StakeAccount` leaf in the bottom-level Merkle tree, containing the voting wallet, stake pubkey, and active delegated stake.
+- [`MetaMerkleLeaf`](../../programs/ncn-snapshot/src/state/proof.rs#L40): represents a `VoteAccount` node in the top-level Merkle tree, containing the subroot of its delegated stake tree and total stake.
+- [`StakeMerkleLeaf`](../../programs/ncn-snapshot/src/state/proof.rs#L64): represents a `StakeAccount` leaf in the bottom-level Merkle tree, containing the voting wallet, stake pubkey, and active delegated stake.
 
 All hashing uses SHA-256 and follows Solana canonical Merkle tree layout (`left || right`, sorted lexicographically by node).
 

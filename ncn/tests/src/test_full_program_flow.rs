@@ -10,7 +10,7 @@ use anchor_client::{
     Client, ClientError, Cluster, Program,
 };
 use cli::{utils::*, MetaMerkleSnapshot};
-use gov_v1::{
+use ncn_snapshot::{
     Ballot, BallotBox, BallotTally, ConsensusResult, MetaMerkleProof, OperatorVote, ProgramConfig,
     MAX_BALLOT_TALLIES, MAX_OPERATOR_VOTES,
 };
@@ -767,7 +767,7 @@ fn main() {
     let payer = read_keypair_file(&anchor_wallet).unwrap();
 
     let client = Client::new_with_options(Cluster::Localnet, &payer, CommitmentConfig::confirmed());
-    let program: Program<&Keypair> = client.program(gov_v1::id()).unwrap();
+    let program: Program<&Keypair> = client.program(ncn_snapshot::id()).unwrap();
 
     let (program_config_pda, _bump) = ProgramConfig::pda();
     let operator_keypairs: Vec<Keypair> = (0..10).map(|_| Keypair::new()).collect();

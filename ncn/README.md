@@ -3,9 +3,9 @@
 This repo contains:
 
 - `cli/`: A command-line tool for Operators to generate stake snapshots and vote on-chain.
-- `programs/gov-v1/`: The Anchor-based on-chain program used to coordinate Operator voting and finalize snapshot consensus.
+- `programs/ncn-snapshot/`: The Anchor-based on-chain program used to coordinate Operator voting and finalize snapshot consensus.
 
-[→ Governance Voter Snapshot Program Design](programs/gov-v1/README.md)
+[→ Governance Voter Snapshot Program Design](programs/ncn-snapshot/README.md)
 [→ Verifier Service README](verifier-service/README.md)
 [→ Verifier Service Deployment](verifier-service/DEPLOYMENT.md)
 
@@ -36,7 +36,7 @@ This repo contains:
 .
 ├── cli/                  # CLI tool for snapshot ops & voting
 ├── programs/
-    └── gov-v1/           # On-chain governance snapshot program
+    └── ncn-snapshot/           # On-chain governance snapshot program
 └── tests/                # Anchor program integration tests
 ```
 
@@ -78,13 +78,13 @@ If a vote account delegated to is missing (closed by the manager), the system wi
 
 ## Dependencies
 
-1. Clone `jito-tip-router` from the **exo-tech-xyz** fork to parent directory and switch to the `gov-v1` branch:
+1. Clone `jito-tip-router` from the **exo-tech-xyz** fork to parent directory and switch to the `ncn-snapshot` branch:
 
    ```bash
    git clone https://github.com/exo-tech-xyz/jito-tip-router.git ../jito-tip-router
    cd ../jito-tip-router
-   git checkout gov-v1
-   cd ../gov-v1
+   git checkout ncn-snapshot
+   cd ../ncn-snapshot
    ```
 
 2. Ensure system is using Rust Version `1.89.0`, otherwise install with:
@@ -109,7 +109,7 @@ Anchor tests can be executed directly from the root directory with:
 anchor test -- --features skip-pda-check
 ```
 
-Note that setup of environment variables is required (see [Dependencies](#dependencies)). For details about building the program with the `skip-pda-check` feature for local testing, see the [Program README](programs/gov-v1/README.md#7-cross-program-invocation-cpi-and-testing).
+Note that setup of environment variables is required (see [Dependencies](#dependencies)). For details about building the program with the `skip-pda-check` feature for local testing, see the [Program README](programs/ncn-snapshot/README.md#7-cross-program-invocation-cpi-and-testing).
 
 ---
 
@@ -172,7 +172,7 @@ RUST_LOG=info cargo run --bin cli -- \
 
 Environment variables affecting snapshot IO:
 
-- `GOV_V1_MAX_SNAPSHOT_MB` (optional): maximum allowed decompressed snapshot size (in MiB) enforced by the CLI bounded decompressor when reading gzip files or raw files. Default is 256. Increase if your snapshots legitimately exceed this size.
+- `NCN_SNAPSHOT_MAX_MB` (optional): maximum allowed decompressed snapshot size (in MiB) enforced by the CLI bounded decompressor when reading gzip files or raw files. Default is 256. Increase if your snapshots legitimately exceed this size.
 
 ```bash
 # Generates a Solana ledger snapshot for a specific slot (from validator bank state)

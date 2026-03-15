@@ -6,7 +6,7 @@ use std::io::{self, Read};
 pub const DEFAULT_MAX_DECOMPRESSED_SNAPSHOT_BYTES: usize = 256 * 1024 * 1024; // 256 MiB
 
 pub fn max_snapshot_bytes() -> usize {
-    if let Ok(mb_str) = std::env::var("GOV_V1_MAX_SNAPSHOT_MB") {
+    if let Ok(mb_str) = std::env::var("NCN_SNAPSHOT_MAX_MB") {
         if let Ok(mb) = mb_str.parse::<usize>() {
             return mb.saturating_mul(1024 * 1024);
         }
