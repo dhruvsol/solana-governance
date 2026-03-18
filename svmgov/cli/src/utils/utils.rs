@@ -53,7 +53,7 @@ pub async fn setup_all(
     let client = Client::new(cluster.clone(), identity_keypair_arc.clone());
     let program = client.program(SvmgovProgram::id())?;
 
-    let merkle_proof_program = client.program(gov_v1::id())?;
+    let merkle_proof_program = client.program(ncn_snapshot::id())?;
     // Step 4: Find the vote account using the program's RpcClient
     let rpc_client = program.rpc();
     let validator_identity = identity_keypair_arc.pubkey();
@@ -90,7 +90,7 @@ pub fn setup_all_with_staker(
     let client = Client::new(cluster.clone(), staker_keypair_arc.clone());
     let program = client.program(SvmgovProgram::id())?;
 
-    let merkle_proof_program = client.program(gov_v1::id())?;
+    let merkle_proof_program = client.program(ncn_snapshot::id())?;
 
     // Step 4: Log the setup completion
     log::debug!(
