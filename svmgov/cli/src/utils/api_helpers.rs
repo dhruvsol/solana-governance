@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use anchor_lang::prelude::Pubkey;
 use anyhow::{Result, anyhow};
-use gov_v1::{ConsensusResult, MetaMerkleLeaf, MetaMerkleProof, StakeMerkleLeaf};
+use ncn_snapshot::{ConsensusResult, MetaMerkleLeaf, MetaMerkleProof, StakeMerkleLeaf};
 use log::info;
 use serde::{Deserialize, Serialize};
 
@@ -165,7 +165,7 @@ fn get_api_base_url() -> anyhow::Result<String> {
     Ok(config.operator_api_url)
 }
 
-/// Convert API MetaMerkleLeafData to gov_v1 MetaMerkleLeaf
+/// Convert API MetaMerkleLeafData to ncn_snapshot MetaMerkleLeaf
 impl TryFrom<&MetaMerkleLeafData> for MetaMerkleLeaf {
     type Error = anyhow::Error;
 
@@ -192,7 +192,7 @@ impl TryFrom<&MetaMerkleLeafData> for MetaMerkleLeaf {
     }
 }
 
-/// Convert API StakeMerkleLeafData to gov_v1 StakeMerkleLeaf
+/// Convert API StakeMerkleLeafData to ncn_snapshot StakeMerkleLeaf
 impl TryFrom<&StakeMerkleLeafData> for StakeMerkleLeaf {
     type Error = anyhow::Error;
 
@@ -207,7 +207,7 @@ impl TryFrom<&StakeMerkleLeafData> for StakeMerkleLeaf {
     }
 }
 
-/// Convert API VoteAccountSummary to gov_v1 MetaMerkleLeaf
+/// Convert API VoteAccountSummary to ncn_snapshot MetaMerkleLeaf
 impl TryFrom<&VoteAccountSummary> for MetaMerkleLeaf {
     type Error = anyhow::Error;
 
@@ -222,7 +222,7 @@ impl TryFrom<&VoteAccountSummary> for MetaMerkleLeaf {
     }
 }
 
-/// Convert API StakeAccountSummary to gov_v1 StakeMerkleLeaf
+/// Convert API StakeAccountSummary to ncn_snapshot StakeMerkleLeaf
 impl TryFrom<&StakeAccountSummary> for StakeMerkleLeaf {
     type Error = anyhow::Error;
 
@@ -262,15 +262,15 @@ pub fn convert_merkle_proof_strings(proof_strings: &[String]) -> Result<Vec<[u8;
         .collect()
 }
 
-/// TryFrom implementation to convert gov_v1 StakeMerkleLeaf to IDL-compatible StakeMerkleLeaf type
+/// TryFrom implementation to convert ncn_snapshot StakeMerkleLeaf to IDL-compatible StakeMerkleLeaf type
 impl TryFrom<StakeMerkleLeaf> for crate::svmgov_program::types::StakeMerkleLeaf {
     type Error = anyhow::Error;
 
-    fn try_from(gov_v1_leaf: StakeMerkleLeaf) -> Result<Self, Self::Error> {
+    fn try_from(ncn_snapshot_leaf: StakeMerkleLeaf) -> Result<Self, Self::Error> {
         Ok(Self {
-            voting_wallet: gov_v1_leaf.voting_wallet,
-            stake_account: gov_v1_leaf.stake_account,
-            active_stake: gov_v1_leaf.active_stake,
+            voting_wallet: ncn_snapshot_leaf.voting_wallet,
+            stake_account: ncn_snapshot_leaf.stake_account,
+            active_stake: ncn_snapshot_leaf.active_stake,
         })
     }
 }
@@ -279,9 +279,9 @@ impl TryFrom<StakeMerkleLeaf> for crate::svmgov_program::types::StakeMerkleLeaf 
 pub fn convert_stake_merkle_leaf_data_to_idl_type(
     stake_merkle_leaf_data: &StakeMerkleLeafData,
 ) -> Result<crate::svmgov_program::types::StakeMerkleLeaf> {
-    // First convert to gov_v1 type, then to IDL type
-    let gov_v1_leaf: StakeMerkleLeaf = stake_merkle_leaf_data.try_into()?;
-    gov_v1_leaf.try_into()
+    // First convert to ncn_snapshot type, then to IDL type
+    let ncn_snapshot_leaf: StakeMerkleLeaf = stake_merkle_leaf_data.try_into()?;
+    ncn_snapshot_leaf.try_into()
 }
 
 /// Generate ConsensusResult PDA for a given snapshot slot

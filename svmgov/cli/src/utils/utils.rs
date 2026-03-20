@@ -14,7 +14,7 @@ use textwrap::wrap;
 use crate::{
     constants::*,
     svmgov_program::{
-        accounts::{Proposal, Vote},
+        accounts::{GlobalConfig, Proposal, Vote},
         program::SvmgovProgram,
     },
 };
@@ -53,7 +53,7 @@ pub async fn setup_all(
     let client = Client::new(cluster.clone(), identity_keypair_arc.clone());
     let program = client.program(SvmgovProgram::id())?;
 
-    let merkle_proof_program = client.program(gov_v1::id())?;
+    let merkle_proof_program = client.program(ncn_snapshot::id())?;
     // Step 4: Find the vote account using the program's RpcClient
     let rpc_client = program.rpc();
     let validator_identity = identity_keypair_arc.pubkey();
@@ -90,7 +90,7 @@ pub fn setup_all_with_staker(
     let client = Client::new(cluster.clone(), staker_keypair_arc.clone());
     let program = client.program(SvmgovProgram::id())?;
 
-    let merkle_proof_program = client.program(gov_v1::id())?;
+    let merkle_proof_program = client.program(ncn_snapshot::id())?;
 
     // Step 4: Log the setup completion
     log::debug!(
@@ -459,6 +459,20 @@ pub fn derive_vote_override_cache_pda(
     let (pda, _) = Pubkey::find_program_address(seeds, program_id);
     pda
 }
+pub fn derive_global_config_pda(program_id: &Pubkey) -> Pubkey {
+    let seeds = &[b"global_config".as_ref()];
+    let (pda, _) = Pubkey::find_program_address(seeds, program_id);
+    pda
+}
+
+pub async fn fetch_global_config(program: &Program<Arc<Keypair>>) -> Result<GlobalConfig> {
+    let pda = derive_global_config_pda(&program.id());
+    program
+        .account::<GlobalConfig>(pda)
+        .await
+        .map_err(|e| anyhow!("Failed to fetch GlobalConfig: {}", e))
+}
+
 /// Derives the ProgramConfig PDA using the seeds [b"ProgramConfig"]
 /// This matches the on-chain derivation in the support_proposal instruction.
 pub fn derive_program_config_pda(ballot_program_id: &Pubkey) -> Pubkey {
